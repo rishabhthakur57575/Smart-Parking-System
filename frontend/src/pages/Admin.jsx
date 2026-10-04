@@ -70,36 +70,13 @@ export default function Admin() {
     }
   };
 
-  const handleResetDemo = () => {
-    if (window.confirm('Reset all 50 slots to original configuration (P01-P23 Reserved, P24-P50 Available)?')) {
-      parkingService.resetDemoData();
-      fetchReservedSlots();
-      setStatusMessage({
-        type: 'info',
-        text: 'Initial parking configuration restored.',
-      });
-    }
-  };
-
   return (
     <div className="page-container narrow-container">
       <div className="page-header">
-        <div className="admin-header-row">
-          <div>
-            <h1 className="page-title">Reserved Parking Slots</h1>
-            <p className="page-subtitle">
-              Staff management interface to release reserved slots for general availability.
-            </p>
-          </div>
-          <button
-            type="button"
-            className="btn btn-secondary btn-sm"
-            onClick={handleResetDemo}
-            title="Reset slots to P01-P23 Reserved, P24-P50 Available"
-          >
-            Reset Demo Configuration
-          </button>
-        </div>
+        <h1 className="page-title">Reserved Parking Slots</h1>
+        <p className="page-subtitle">
+          Staff management interface to release reserved slots for general availability.
+        </p>
       </div>
 
       {statusMessage.text && (

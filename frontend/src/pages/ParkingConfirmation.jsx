@@ -1,18 +1,33 @@
 import React from 'react';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import TokenCard from '../components/TokenCard';
 
 export default function ParkingConfirmation() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Retrieve confirmation state from navigation or use sample fallback for direct URL access
-  const bookingData = location.state || {
-    slotNumber: 'P24',
-    vehicleNumber: 'MH04AB1234',
-    entryTime: '12:35 PM',
-    token: 'PK-2026-A8F42',
-  };
+  // Retrieve confirmation state from navigation
+  const bookingData = location.state;
+
+  if (!bookingData || !bookingData.token) {
+    return (
+      <div className="page-container narrow-container">
+        <div className="confirmation-card text-center py-5">
+          <h1 className="page-title">No Active Parking Session</h1>
+          <p className="page-subtitle mb-4">
+            No active parking session found. Please book a parking slot first.
+          </p>
+          <button
+            type="button"
+            className="btn btn-primary btn-large"
+            onClick={() => navigate('/layout')}
+          >
+            Find Parking
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const { slotNumber, vehicleNumber, entryTime, token } = bookingData;
 

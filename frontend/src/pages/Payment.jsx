@@ -7,24 +7,34 @@ export default function Payment() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Retrieve exit details from state or fallback for demo
-  const exitDetails = location.state?.exitDetails || {
-    token: 'PK-2026-A8F42',
-    vehicleNumber: 'MH04AB1234',
-    slotNumber: 'P24',
-    entryTime: '12:35 PM',
-    currentTime: '03:20 PM',
-    duration: '3 Hours',
-    rate: '₹30/hour',
-    ratePerHour: 30,
-    totalAmount: 90,
-  };
+  // Retrieve exit details from state
+  const exitDetails = location.state?.exitDetails;
 
   const [paymentMethod, setPaymentMethod] = useState('UPI');
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [transactionId, setTransactionId] = useState('');
   const [paymentError, setPaymentError] = useState('');
+
+  if (!exitDetails || !exitDetails.token) {
+    return (
+      <div className="page-container narrow-container">
+        <div className="payment-card text-center py-5">
+          <h1 className="page-title">No Exit Session Found</h1>
+          <p className="page-subtitle mb-4">
+            No active parking exit session found. Please calculate charges via Exit Parking first.
+          </p>
+          <button
+            type="button"
+            className="btn btn-primary btn-large"
+            onClick={() => navigate('/exit')}
+          >
+            Go to Exit Parking
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const handlePay = async () => {
     setIsProcessing(true);
